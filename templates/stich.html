@@ -34,11 +34,11 @@
     <tbody>
       {% for r in resultate %}
       <tr>
-          <td class="rang" data-label="Vereinsrang">
+          <td data-label="Vereinsrang">
             <span class="value">{{ loop.index }}</span>
           </td>
   
-          <td class="rang" data-label="Rang">
+          <td data-label="Rang">
               <span class="value">{{ r.rang }}</span>
           </td>        
   
@@ -50,7 +50,7 @@
             </span>  
           </td>
   
-          <td class="total" data-label="Total">
+          <td data-label="Total">
             <span class="value">{{ r.total }}</span>
           </td>
       </tr>

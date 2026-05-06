@@ -17,10 +17,10 @@
   <tbody>
     {% for r in resultate %}
     <tr>
-      <td class="rang" data-label="Rang">{{ loop.index }}</td>
+      <td data-label="Rang">{{ loop.index }}</td>
       <td data-label="Schütze"><strong>{{ r.vorname }} {{ r.nachname }}</strong></td>
       <td data-label="Feld">{{ r.feld }}</td>
-      <td class="total" data-label="Total">{{ r.total }}</td>
+      <td data-label="Total">{{ r.total }}</td>
     </tr>
     {% endfor %}
   </tbody>

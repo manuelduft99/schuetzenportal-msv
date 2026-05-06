@@ -8,13 +8,15 @@
     <p><em>Keine Resultate gefunden.</em></p>
 {% else %}
 <table>
-    <tr>
-        <th>Stich</th>
-        <th>Kategorie</th>
-        <th>Vereinsrang</th>
-        <th>Rang</th>
-        <th>Total</th>
-    </tr>
+    <thead>
+        <tr>
+            <th>Stich</th>
+            <th>Kategorie</th>
+            <th>Vereinsrang</th>
+            <th>Rang</th>
+            <th>Total</th>
+        </tr>
+    </thead>
     {% for r in resultate %}
     <tr>
         <td data-label="Stich">
@@ -25,15 +27,15 @@
             {{ r.kategorie }}
         </td>
 
-        <td class="rang" data-label="Vereinsrang">
+        <td data-label="Vereinsrang">
             {{ r.gesamt_rang }}
         </td>
 
-        <td class="rang" data-label="Rang">
+        <td data-label="Rang">
             {{ r.rang }}
         </td>
 
-        <td class="total" data-label="Total">
+        <td data-label="Total">
             {{ r.total }}
         </td>
     </tr>
