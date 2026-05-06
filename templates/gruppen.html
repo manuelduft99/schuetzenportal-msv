@@ -7,32 +7,25 @@
     <p><em>Keine Gruppenresultate gefunden.</em></p>
 {% else %}
 <table>
-    <tr>
+    <thead>
+      <tr>    
         <th>Rang</th>
         <th>Gruppe</th>
         <th>Feld</th>
         <th>Total</th>
-    </tr>
-    {% for r in resultate %}
-    <tr>
-        <td class="rang" data-label="Rang">
-            {{ r.rang }}
-        </td>
-
-        <td data-label="Gruppe">
-            {{ r.gruppe }}
-        </td>
-
-        <td data-label="Feld">
-            {{ r.feld }}
-        </td>
-
-        <td class="total" data-label="Total">
-            {{ r.total }}
-        </td>
-    </tr>
-    {% endfor %}
-</table>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in resultate %}
+      <tr>       
+        <td class="rang" data-label="Rang">{{ r.rang }}</td>
+        <td data-label="Gruppe"><strong>{{ r.gruppe }}</strong></td>
+        <td data-label="Feld">{{ r.feld }}</td>
+        <td class="total" data-label="Total">{{ r.total }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 {% endif %}
 
 <div style="margin-top:1.5rem;">

@@ -4,4 +4,4 @@ uvicorn
 requests
 beautifulsoup4
 jinja2
-python-multipart
+python-multipartgit --versio

@@ -22,19 +22,23 @@
 </div>
 
 <table>
-    <tr>
+    <thead>
+      <tr>
         <th>Rang</th>
         <th>Verein</th>
         <th>Total</th>
-    </tr>
-    {% for r in resultate %}
-    <tr>
-        <td class="rang">{{ r.rang }}</td>
-        <td>{{ r.verein }}</td>
-        <td class="total">{{ r.total }}</td>
-    </tr>
-    {% endfor %}
-</table>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in resultate %}
+      <tr>
+        <td class="rang" data-label="Rang"><span class="value">{{ r.rang }}</span></td>
+        <td data-label="Verein"><strong><span class="value">{{ r.verein }}</span></strong></td>
+        <td class="total" data-label="Total"><span class="value">{{ r.total }}</span></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 {% endif %}
 
 <div style="margin-top:1.5rem;">

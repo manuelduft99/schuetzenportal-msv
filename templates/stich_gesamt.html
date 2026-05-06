@@ -4,33 +4,28 @@
 
 <h2>{{ stich }} – Gesamtwertung (alle Felder)</h2>
 
-<table>
+
+table>
+  <thead>
     <tr>
-        <th>Rang</th>
-        <th>Schütze</th>
-        <th>Feld</th>
-        <th>Total</th>
+      <th>Rang</th>
+      <th>Schütze</th>
+      <th>Feld</th>
+      <th>Total</th>
     </tr>
+  </thead>
+  <tbody>
     {% for r in resultate %}
     <tr>
-        <td class="rang" data-label="Rang">
-            {{ loop.index }}
-        </td>
-
-        <td data-label="Schütze">
-            {{ r.vorname }} {{ r.nachname }}
-        </td>
-
-        <td data-label="Feld">
-            {{ r.feld }}
-        </td>
-
-        <td class="total" data-label="Total">
-            {{ r.total }}
-        </td>
+      <td class="rang" data-label="Rang">{{ loop.index }}</td>
+      <td data-label="Schütze"><strong>{{ r.vorname }} {{ r.nachname }}</strong></td>
+      <td data-label="Feld">{{ r.feld }}</td>
+      <td class="total" data-label="Total">{{ r.total }}</td>
     </tr>
     {% endfor %}
+  </tbody>
 </table>
+
 
 <div style="margin-top:1.5rem;">
     <a href="{{ back_url }}" class="button">← Zurück</a>

@@ -122,29 +122,92 @@
             border-collapse: collapse;
             }
 
-        @media (max-width: 768px) {
+        /*  ===============================
+            MOBILE CARD LAYOUT – EINHEITLICH
+            =============================== */
+            @media (max-width: 768px) {
+
+            body {
+                background: #f2f2f2;
+            }
+
+            table {
+                border: none;
+                width: 100%;
+            }
+
             table thead {
                 display: none;
             }
 
-            table tr {
+            table tbody tr {
                 display: block;
+                background: #ffffff;
+                border-radius: 14px;
+                padding: 0.8rem 1rem;
                 margin-bottom: 1rem;
-                border-bottom: 2px solid #ddd;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.08);
             }
 
+            
+            
             table td {
-                display: flex;
-                justify-content: space-between;
-                padding: 0.4rem 0;
-            }
+                    display: grid;
+                    grid-template-columns: 1fr auto; /* links Titel, rechts Wert */
+                    align-items: center;
+                    gap: 1rem;
+                    padding: 0.4rem 0;
+                }
 
-            table td::before {
-                content: attr(data-label);
-                font-weight: bold;
-                margin-right: 1rem;
-            }
-        }
+                /* Titel links */
+                table td::before {
+                    content: attr(data-label);
+                    font-weight: 600;
+                    color: #666;
+                    text-align: left;
+                }
+
+                /* ✅ Wert IMMER rechts */
+                table td .value {
+                    justify-self: end;
+                    text-align: right;
+                    font-weight: 500;
+                    color: #000;
+                }
+
+                /* Links wie normale Werte behandeln */
+                table td .value a {
+                    text-decoration: none;
+                    font-weight: 600;
+                    color: #0a58ca;
+                }
+
+                /* Total stärker hervorheben */
+                table td.total .value {
+                    font-size: 1.1rem;
+                    font-weight: 700;
+                }
+
+
+                /* Rang dezenter */
+                table td.rang {
+                    color: #444;
+                }
+
+                /* Namen/Gruppe gut lesbar */
+                table td strong {
+                    font-weight: 600;
+                }
+
+                /* Buttons mobil */
+                .button {
+                    width: 100%;
+                    padding: 0.8rem;
+                    font-size: 1.05rem;
+                    border-radius: 12px;
+                    text-align: center;
+                }
+}
     </style>
 </head>
 <body>

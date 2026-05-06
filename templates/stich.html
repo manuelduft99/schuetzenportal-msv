@@ -21,34 +21,43 @@
 </form>
 
 <table>
-  <tr>
-      <th>Vereinsrang</th>
-      <th>Rang</th>
-      <th>Schütze</th>
-      <th>Total</th>
-  </tr>
-  {% for r in resultate %}
-  <tr>
-      <td class="rang" data-label="Vereinsrang">
-          {{ loop.index }}
-      </td>
 
-      <td class="rang" data-label="Rang">
-          {{ r.rang }}
-      </td>        
-
-      <td data-label="Schütze">
-          <a href="/schuetze/{{ stich.split(' – ')[0] }}/{{ stich.split(' – ')[1] }}/{{ loop.index }}">
-              {{ r.vorname }} {{ r.nachname }}
-          </a>
-      </td>
-
-      <td class="total" data-label="Total">
-          {{ r.total }}
-      </td>
-  </tr>
-  {% endfor %}
-</table>
+    <thead>
+      <tr>
+          <th>Vereinsrang</th>
+          <th>Rang</th>
+          <th>Schütze</th>
+          <th>Total</th>
+      </tr>
+    </thead>
+  
+    <tbody>
+      {% for r in resultate %}
+      <tr>
+          <td class="rang" data-label="Vereinsrang">
+            <span class="value">{{ loop.index }}</span>
+          </td>
+  
+          <td class="rang" data-label="Rang">
+              <span class="value">{{ r.rang }}</span>
+          </td>        
+  
+          <td data-label="Schütze">
+            <span class="value">
+              <a href="/schuetze/{{ stich.split(' – ')[0] }}/{{ stich.split(' – ')[1] }}/{{ loop.index }}">
+                  <strong>{{ r.vorname }} {{ r.nachname }}</strong>
+              </a>
+            </span>  
+          </td>
+  
+          <td class="total" data-label="Total">
+            <span class="value">{{ r.total }}</span>
+          </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  
+  </table>
 {% endif %}
 
 <div style="margin-top:1.5rem; font-size:0.95rem;">
