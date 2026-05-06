@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>{{ vorname }} {{ nachname }}</h2>
+
+{% if resultate|length == 0 %}
+    <p><em>Keine Resultate gefunden.</em></p>
+{% else %}
+<table>
+    <tr>
+        <th>Stich</th>
+        <th>Kategorie</th>
+        <th>Vereinsrang</th>
+        <th>Rang</th>
+        <th>Total</th>
+    </tr>
+    {% for r in resultate %}
+    <tr>
+        <td data-label="Stich">
+            {{ r.stich }}
+        </td>
+
+        <td data-label="Kategorie">
+            {{ r.kategorie }}
+        </td>
+
+        <td class="rang" data-label="Vereinsrang">
+            {{ r.vereinsrang }}
+        </td>
+
+        <td class="rang" data-label="Rang">
+            {{ r.rang }}
+        </td>
+
+        <td class="total" data-label="Total">
+            {{ r.total }}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+{% endif %}
+
+<div style="margin-top:1.5rem;">
+    <a href="{{ back_url }}" class="button">← Zurück zur Rangliste</a>
+</div>
+
+{% endblock %}

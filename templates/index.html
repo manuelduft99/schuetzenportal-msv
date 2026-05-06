@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Übersicht Stiche</h2>
+
+<div class="grid">
+    {% for name, stich in stiche.items() %}
+        <div class="card">
+            <h3>{{ name }}</h3>
+    
+            {% if stich.typ == "verein" %}
+                <a href="/stich/{{ name }}" class="button">
+                    Rangliste anzeigen
+                </a>
+    
+            {% elif stich.typ == "gruppe" %}
+                <a href="/gruppe/{{ name }}" class="button">
+                    Gruppenwettkampf anzeigen
+                </a>
+    
+            {% else %}
+                <a href="/stich/{{ name }}" class="button">
+                    Stich auswählen
+                </a>
+            {% endif %}
+    
+        </div>
+    {% endfor %}
+    </div>
+
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Vereinskonkurrenz</h2>
+
+{% if resultate|length == 0 %}
+    <p><em>Keine Resultate gefunden.</em></p>
+{% else %}
+
+<div style="margin-bottom:1rem; display:flex; gap:1rem; align-items:center;">
+  <form method="post" action="/cache/refresh">
+      <input type="hidden" name="url" value="{{ cache_url }}">
+      <button type="submit" class="button">
+          Resultate aktualisieren
+      </button>
+  </form>
+
+  <span style="color:#666; font-size:0.9rem;">
+      Cache-Status: {{ cache_text }}
+  </span>
+</div>
+
+<table>
+    <tr>
+        <th>Rang</th>
+        <th>Verein</th>
+        <th>Total</th>
+    </tr>
+    {% for r in resultate %}
+    <tr>
+        <td class="rang">{{ r.rang }}</td>
+        <td>{{ r.verein }}</td>
+        <td class="total">{{ r.total }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
+<div style="margin-top:1.5rem;">
+  <a href="{{ back_url }}" class="button">
+      ← Zurück
+  </a>
+</div>
+
+
+{% endblock %}

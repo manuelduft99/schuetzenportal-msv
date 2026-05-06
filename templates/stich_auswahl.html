@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>{{ stich_name }}</h2>
+
+<p>Bitte Kategorie wählen:</p>
+
+<div class="grid">
+
+    {# ✅ Einzelne Felder: Sport / Feld D / Feld E #}
+    {% for kat, details in kategorien.items() %}
+        <div class="card">
+            <h3>{{ kat }}</h3>
+            <a href="/stich/{{ stich_name }}/{{ kat }}" class="button">
+                Rangliste öffnen
+            </a>
+        </div>
+    {% endfor %}
+
+    {# ✅ NEU: Gesamtwertung (alle Felder) #}
+    <div class="card">
+        <h3>Gesamtwertung</h3>
+        <p>Alle Felder zusammen</p>
+        <a href="/stich/{{ stich_name }}/gesamt" class="button">
+            Gesamt‑Rangliste öffnen
+        </a>
+    </div>  
+</div>
+
+<div style="margin-top:1.5rem;">
+    <a href="{{ back_url }}" class="button">
+        ← Zurück
+    </a>
+</div>
+
+{% endblock %}

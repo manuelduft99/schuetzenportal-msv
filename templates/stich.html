@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>{{ stich }}</h2>
+
+{% if resultate|length == 0 %}
+    <p><em>Keine Resultate des Vereins vorhanden.</em></p>
+{% else %}
+
+<form method="post" action="/cache/refresh" style="margin-bottom:1rem; display:flex; gap:1rem; align-items:center;">
+  <input type="hidden" name="url" value="{{ cache_url }}">
+  <input type="hidden" name="redirect_to" value="{{ current_path }}">
+  <button type="submit" class="button">
+      Resultate aktualisieren
+  </button>
+
+  <span style="color:#666; font-size:0.9rem;">
+      Cache-Status: {{ cache_text }}
+  </span>
+</form>
+
+<table>
+  <tr>
+      <th>Vereinsrang</th>
+      <th>Rang</th>
+      <th>Schütze</th>
+      <th>Total</th>
+  </tr>
+  {% for r in resultate %}
+  <tr>
+      <td class="rang" data-label="Vereinsrang">
+          {{ loop.index }}
+      </td>
+
+      <td class="rang" data-label="Rang">
+          {{ r.rang }}
+      </td>        
+
+      <td data-label="Schütze">
+          <a href="/schuetze/{{ stich.split(' – ')[0] }}/{{ stich.split(' – ')[1] }}/{{ loop.index }}">
+              {{ r.vorname }} {{ r.nachname }}
+          </a>
+      </td>
+
+      <td class="total" data-label="Total">
+          {{ r.total }}
+      </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %}
+
+<div style="margin-top:1.5rem; font-size:0.95rem;">
+  <a href="{{ original_url }}" target="_blank" rel="noopener">
+      🔗 Originalrangliste im Schützenportal öffnen
+  </a>
+</div>
+
+<div style="margin-top:1.5rem;">
+  <a href="{{ back_url }}" class="button">
+      ← Zurück
+  </a>
+</div>
+
+
+{% endblock %}

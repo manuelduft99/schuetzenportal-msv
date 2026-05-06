@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>{{ stich }} – Gruppenwettkampf</h2>
+
+{% if resultate|length == 0 %}
+    <p><em>Keine Gruppenresultate gefunden.</em></p>
+{% else %}
+<table>
+    <tr>
+        <th>Rang</th>
+        <th>Gruppe</th>
+        <th>Feld</th>
+        <th>Total</th>
+    </tr>
+    {% for r in resultate %}
+    <tr>
+        <td class="rang" data-label="Rang">
+            {{ r.rang }}
+        </td>
+
+        <td data-label="Gruppe">
+            {{ r.gruppe }}
+        </td>
+
+        <td data-label="Feld">
+            {{ r.feld }}
+        </td>
+
+        <td class="total" data-label="Total">
+            {{ r.total }}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
+<div style="margin-top:1.5rem;">
+    <a href="{{ back_url }}" class="button">
+        ← Zurück
+    </a>
+  </div>
+
+{% endblock %}
