@@ -21,7 +21,7 @@ templates = Jinja2Templates(directory="templates")
 # Datenbank (SQLite Cache)
 # --------------------------------------------------
 DB_PATH = "cache.db"
-CACHE_TTL = 300  # 5 Minuten
+CACHE_TTL = 900  # 15 Minuten
 
 
 def init_db():
@@ -42,7 +42,7 @@ init_db()
 
 
 def get_rangliste(url: str):
-    """Liefert Rangliste + Cache-Zeitpunkt (SQLite, 5‑Min‑TTL)"""
+    """Liefert Rangliste + Cache-Zeitpunkt (SQLite, 15‑Min‑TTL)"""
     now = int(time.time())
 
     conn = sqlite3.connect(DB_PATH)
@@ -131,8 +131,8 @@ G300_EINZELSTICHE = {
         "Feld E": {"mid": 27, "eid": 6453},
     },
     "Kranz": {
-        "Sport":  {"mid": 29, "eid": 6453},
-        "Feld D": {"mid": 30, "eid": 6454},
+        "Sport":  {"mid": 29, "eid": 6454},
+        "Feld D": {"mid": 30, "eid": 6455},
         "Feld E": {"mid": 31, "eid": 6456},
     },
     "Ehrengaben": {
@@ -369,72 +369,77 @@ def schuetzenprofil(
     kategorie: str,
     vereinsrang: int
 ):
-    # 1️⃣ Referenz-Stich/Kategorie
+    # -------------------------------
+    # 1) Referenz-Schütze bestimmen
+    # -------------------------------
     stich_cfg = STICHE.get(stich)
     if not stich_cfg:
-        return HTMLResponse("Stich nicht gefunden", status_code=404)
+        return HTMLResponse("Stich nicht gefunden", 404)
 
     kat_cfg = stich_cfg["kategorien"].get(kategorie)
     if not kat_cfg:
-        return HTMLResponse("Kategorie nicht gefunden", status_code=404)
+        return HTMLResponse("Kategorie nicht gefunden", 404)
 
-    daten_ref, _ = get_rangliste(kat_cfg["url"])
-    if vereinsrang < 1 or vereinsrang > len(daten_ref):
-        return HTMLResponse("Schütze nicht gefunden", status_code=404)
+    ref_daten, _ = get_rangliste(kat_cfg["url"])
+    if vereinsrang < 1 or vereinsrang > len(ref_daten):
+        return HTMLResponse("Schütze nicht gefunden", 404)
 
-    ref = daten_ref[vereinsrang - 1]
+    ref = ref_daten[vereinsrang - 1]
     ref_vorname = ref["vorname"]
     ref_nachname = ref["nachname"]
 
-    # 2️⃣ Alle Resultate dieses Schützen sammeln
-    alle_resultate = []
+    # -------------------------------
+    # 2) ALLE Ranglisten EINMAL laden
+    # -------------------------------
+    ranglisten = {}
 
     for stich_name, stich_data in STICHE.items():
         if stich_data["typ"] != "einzel":
             continue
 
-        # ✅ Gesamtwertung für diesen Stich berechnen
-        alle = []
-
+        ranglisten[stich_name] = {}
         for kat_name, kat_data in stich_data["kategorien"].items():
             daten, _ = get_rangliste(kat_data["url"])
-            for r in daten:
-                alle.append({
-                    "vorname": r["vorname"],
-                    "nachname": r["nachname"],
-                    "total": int(r["total"]),
-                })
+            ranglisten[stich_name][kat_name] = daten
 
+    # -------------------------------
+    # 3) Resultate des Schützen sammeln
+    # -------------------------------
+    alle_resultate = []
+
+    for stich_name, kat_map in ranglisten.items():
+        # ---- Gesamtwertung pro Stich ----
         beste = {}
-        for r in alle:
-            key = (r["vorname"], r["nachname"])
-            if key not in beste or r["total"] > beste[key]["total"]:
-                beste[key] = r
 
-        gesamt = sorted(
+        for kat_name, daten in kat_map.items():
+            for r in daten:
+                key = (r["vorname"], r["nachname"])
+                total = int(r["total"])
+                if key not in beste or total > beste[key]["total"]:
+                    beste[key] = {
+                        "vorname": r["vorname"],
+                        "nachname": r["nachname"],
+                        "total": total
+                    }
+
+        gesamt_liste = sorted(
             beste.values(),
             key=lambda x: x["total"],
             reverse=True
         )
 
-        # ✅ Gesamt-Vereinsrang dieses Schützen
         gesamt_rang = None
-        for pos, r in enumerate(gesamt, start=1):
-            if (
-                r["vorname"] == ref_vorname
-                and r["nachname"] == ref_nachname
-            ):
+        for pos, r in enumerate(gesamt_liste, start=1):
+            if r["vorname"] == ref_vorname and r["nachname"] == ref_nachname:
                 gesamt_rang = pos
                 break
 
-        # ✅ Einzelresultate dieses Stichs sammeln
-        for kat_name, kat_data in stich_data["kategorien"].items():
-            daten, _ = get_rangliste(kat_data["url"])
-
+        # ---- Einzelresultate dieses Stichs ----
+        for kat_name, daten in kat_map.items():
             for r in daten:
                 if (
-                    r.get("vorname") == ref_vorname
-                    and r.get("nachname") == ref_nachname
+                    r["vorname"] == ref_vorname
+                    and r["nachname"] == ref_nachname
                 ):
                     alle_resultate.append({
                         "stich": stich_name,
@@ -444,6 +449,9 @@ def schuetzenprofil(
                         "total": r.get("total"),
                     })
 
+    # -------------------------------
+    # 4) Rendern
+    # -------------------------------
     return templates.TemplateResponse(
         request,
         "schuetze.html",
@@ -454,6 +462,7 @@ def schuetzenprofil(
             "back_url": f"/stich/{stich}/{kategorie}",
         }
     )
+
 from parser.gruppen import lade_gruppenresultate
 
 @app.get("/gruppe/{stich_name}", response_class=HTMLResponse)
