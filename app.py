@@ -21,7 +21,7 @@ templates = Jinja2Templates(directory="templates")
 # Datenbank (SQLite Cache)
 # --------------------------------------------------
 DB_PATH = "cache.db"
-CACHE_TTL = 900  # 15 Minuten
+CACHE_TTL = 1800  # 30 Minuten
 
 
 def init_db():
@@ -42,7 +42,7 @@ init_db()
 
 
 def get_rangliste(url: str):
-    """Liefert Rangliste + Cache-Zeitpunkt (SQLite, 15‑Min‑TTL)"""
+    """Liefert Rangliste + Cache-Zeitpunkt (SQLite, 30‑Min‑TTL)"""
     now = int(time.time())
 
     conn = sqlite3.connect(DB_PATH)
@@ -97,7 +97,7 @@ VEREINSNAMEN = {
 # --------------------------------------------------
 # Event & Stiche (DEINE Struktur)
 # --------------------------------------------------
-EVENT = "SGKSF2025"
+EVENT = "ESF2026"
 
 G300_EINZELSTICHE = {
     "Vereinsstich": {
