@@ -21,7 +21,7 @@ templates = Jinja2Templates(directory="templates")
 # Datenbank (SQLite Cache)
 # --------------------------------------------------
 DB_PATH = "cache.db"
-CACHE_TTL = 900  # 15 Minuten
+CACHE_TTL = 1800  # 30 Minuten
 
 
 def init_db():
@@ -42,7 +42,7 @@ init_db()
 
 
 def get_rangliste(url: str):
-    """Liefert Rangliste + Cache-Zeitpunkt (SQLite, 15‑Min‑TTL)"""
+    """Liefert Rangliste + Cache-Zeitpunkt (SQLite, 30‑Min‑TTL)"""
     now = int(time.time())
 
     conn = sqlite3.connect(DB_PATH)
@@ -97,62 +97,74 @@ VEREINSNAMEN = {
 # --------------------------------------------------
 # Event & Stiche (DEINE Struktur)
 # --------------------------------------------------
-EVENT = "SGKSF2025"
+EVENT = "ESF2026"
 
 G300_EINZELSTICHE = {
-    "Vereinsstich": {
-        "Sport":  {"mid": 5,  "eid": 6436},
-        "Feld D": {"mid": 6,  "eid": 6437},
-        "Feld E": {"mid": 7,  "eid": 6438},
+    "Verein": {
+        "Sport":  {"mid": 5,  "eid": 7492},
+        "Feld D": {"mid": 6,  "eid": 7493},
+        "Feld E": {"mid": 7,  "eid": 7494},
     },
     "Kunst": {
-        "Sport":  {"mid": 9,  "eid": 6439},
-        "Feld D": {"mid": 10, "eid": 6440},
-        "Feld E": {"mid": 11, "eid": 6441},
+        "Sport":  {"mid": 9,  "eid": 7495},
+        "Feld D": {"mid": 10, "eid": 7496},
+        "Feld E": {"mid": 11, "eid": 7497},
     },
     "Militär": {
-        "Sport":  {"mid": 13, "eid": 6442},
-        "Feld D": {"mid": 14, "eid": 6443},
-        "Feld E": {"mid": 15, "eid": 6444},
+        "Sport":  {"mid": 13, "eid": 7498},
+        "Feld D": {"mid": 14, "eid": 7499},
+        "Feld E": {"mid": 15, "eid": 7500},
     },
     "Auszahlung": {
-        "Sport":  {"mid": 17, "eid": 6445},
-        "Feld D": {"mid": 18, "eid": 6446},
-        "Feld E": {"mid": 19, "eid": 6447},
+        "Sport":  {"mid": 17, "eid": 7501},
+        "Feld D": {"mid": 18, "eid": 7502},
+        "Feld E": {"mid": 19, "eid": 7503},
     },
     "Serie": {
-        "Sport":  {"mid": 21, "eid": 6448},
-        "Feld D": {"mid": 22, "eid": 6449},
-        "Feld E": {"mid": 23, "eid": 6450},
+        "Sport":  {"mid": 21, "eid": 7504},
+        "Feld D": {"mid": 22, "eid": 7505},
+        "Feld E": {"mid": 23, "eid": 7506},
     },
-    "Pizol": {
-        "Sport":  {"mid": 25, "eid": 6451},
-        "Feld D": {"mid": 26, "eid": 6452},
-        "Feld E": {"mid": 27, "eid": 6453},
+    "Steinbock": {
+        "Sport":  {"mid": 25, "eid": 7507},
+        "Feld D": {"mid": 26, "eid": 7508},
+        "Feld E": {"mid": 27, "eid": 7509},
+    },
+    "Rhein": {
+        "Sport":  {"mid": 29, "eid": 7510},
+        "Feld D": {"mid": 30, "eid": 7511},
+        "Feld E": {"mid": 31, "eid": 7512},
     },
     "Kranz": {
-        "Sport":  {"mid": 29, "eid": 6454},
-        "Feld D": {"mid": 30, "eid": 6455},
-        "Feld E": {"mid": 31, "eid": 6456},
+        "Sport":  {"mid": 33, "eid": 7513},
+        "Feld D": {"mid": 34, "eid": 7514},
+        "Feld E": {"mid": 35, "eid": 7515},
     },
     "Ehrengaben": {
-        "Sport":  {"mid": 33, "eid": 6457},
-        "Feld D": {"mid": 34, "eid": 6458},
-        "Feld E": {"mid": 35, "eid": 6459},
+        "Sport":  {"mid": 37, "eid": 7516},
+        "Feld D": {"mid": 38, "eid": 7517},
+        "Feld E": {"mid": 39, "eid": 7518},
     },
     "Veteran": {
-        "Sport":  {"mid": 37, "eid": 6460},
-        "Feld D": {"mid": 38, "eid": 6461},
-        "Feld E": {"mid": 39, "eid": 6462},
+        "Feld D": {"mid": 42, "eid": 7520},
+        "Feld E": {"mid": 43, "eid": 7521},
     },
     "Nachwuchs": {
-        "Sport":  {"mid": 41, "eid": 6463},
-        "Feld E": {"mid": 42, "eid": 6464},
+        "Feld D&E": {"mid": 46, "eid": 7523},
     },
     "Nachdoppel": {
-        "Sport":  {"mid": 44, "eid": 6466},
-        "Feld D": {"mid": 45, "eid": 6467},
-        "Feld E": {"mid": 46, "eid": 6468},
+        "Sport":  {"mid": 48, "eid": 7524},
+        "Feld D": {"mid": 49, "eid": 7525},
+        "Feld E": {"mid": 50, "eid": 7526},
+    },
+    "Meisterschaft Liegend": {
+        "Sport":  {"mid": 52, "eid": 7527},
+        "Feld D": {"mid": 53, "eid": 7528},
+        "Feld E": {"mid": 54, "eid": 7529},
+    },
+    "Meisterschaft 2-Stellung": {
+        "Sport":  {"mid": 56, "eid": 7530},
+        "Feld E": {"mid": 58, "eid": 7532},
     },
 
 }
@@ -163,7 +175,7 @@ def build_stiche():
             "url": (
                 "https://resultat.schuetzenportal.ch/"
                 "ClubConcurrence/ShowClubRanklist"
-                f"?mid=58&cid=1416&evt={EVENT}"
+                f"?mid=63&cid=1524&evt={EVENT}"
             ),
         }
     }
@@ -172,13 +184,7 @@ def build_stiche():
     "typ": "gruppe",
     "kategorien": {
         "Sport": {
-            "url": "https://resultat.schuetzenportal.ch/GroupCompetition/ShowGroupRanklist?mid=64&gid=488&evt=SGKSF2025"
-        },
-        "Feld D": {
-            "url": "https://resultat.schuetzenportal.ch/GroupCompetition/ShowGroupRanklist?mid=65&gid=498&evt=SGKSF2025"
-        },
-        "Feld E": {
-            "url": "https://resultat.schuetzenportal.ch/GroupCompetition/ShowGroupRanklist?mid=66&gid=499&evt=SGKSF2025"
+            "url": "https://resultat.schuetzenportal.ch/GroupCompetition/ShowGroupRanklist?mid=72&gid=568&evt=ESF2026"
         },
     }
 }
@@ -193,8 +199,7 @@ def build_stiche():
         for kat_name, ids in kategorien.items():
             stiche[stich_name]["kategorien"][kat_name] = {
                 "url": (
-                    "https://resultat.schuetzenportal.ch/"
-                    "SingleRanklist/ShowCompetitionRanklist"
+                    "https://resultat.schuetzenportal.ch/SingleRanklist/ShowCompetitionRanklist"
                     f"?mid={ids['mid']}&eid={ids['eid']}&evt={EVENT}"
                 )
             }
